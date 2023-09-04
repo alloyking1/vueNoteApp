@@ -4,6 +4,7 @@
   let show = ref(false);
   let note = ref([]);
   let noteContent = ref("");
+  let error = ref("");
 
   const openCloseModal = () => {
     noteContent.value = "";
@@ -11,13 +12,18 @@
   }
 
   const addNote = () => {
-    note.value.push({
-      id: Math.floor(Math.random() * 100000000),
-      text: noteContent.value,
-      date: new Date(),
-      backgroundColor: getRandomColor( )
-    });
-    openCloseModal();
+    if(noteContent.value != " " && noteContent.value.length >= 6){
+      note.value.push({
+        id: Math.floor(Math.random() * 100000000),
+        text: noteContent.value,
+        date: new Date(),
+        backgroundColor: getRandomColor( )
+      });
+      error.value = "";
+      openCloseModal();
+    }else{
+      error.value = "Note too short";
+    }
   }
 
   const getRandomColor = () => {
@@ -50,6 +56,9 @@
     <div class="bg-white shadow-md rounded-2xl m-32 w-auto">
       <div class="w-auto mx-8">
         <textarea v-model="noteContent" class="border border-gray-400 w-full mt-6 rounded-2xl p-4" cols="30" rows="10"></textarea>
+        <div class="bg-red-500 text-white p-2" v-if="error != ''">
+          {{ error }}
+        </div>
         <button @click="addNote" class="p-4 bg-blue-500 rounded w-full text-white mt-4">Add note</button>
         <button @click="openCloseModal"  class="p-4 bg-red-500 rounded w-full text-white mt-4">Close</button>
       </div>
