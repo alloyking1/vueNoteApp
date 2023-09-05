@@ -22,7 +22,7 @@
       error.value = "";
       openCloseModal();
     }else{
-      error.value = "Note too short";
+      error.value = "Note too short, text must be up to 6 characters";
     }
   }
 
